@@ -1,10 +1,10 @@
 <table id="bang" class="table table-striped">
     <tr>
-        <th id="id">ID</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Scores</th>
-        <th>Actions</th>
+        <th id="id">{{transl "Id"}}</th>
+        <th>{{transl 'Name'}}</th>
+        <th>{{transl 'Age'}}</th>
+        <th>{{transl 'Scores'}}</th>
+        <th>{{transl 'Action'}}</th>
     </tr>
     {{#each this}}  
     <tr id="vai">
@@ -17,8 +17,8 @@
             {{/mon}}
         </td>
         <td>
-            <button class="edit-btn" data-id="{{ID}}">Edit</button>
-            <button class="delete-btn" data-id="{{ID}}">Delete</button>
+            <button class="edit-btn" data-id="{{ID}}">{{transl 'Edit'}}</button>
+            <button class="delete-btn" data-id="{{ID}}">{{transl 'Delete'}}</button>
         </td>
     </tr>
     {{/each}} 

@@ -13,15 +13,26 @@
     <script src="jquery-2.2.3.min.js"></script>
     <script src="handlebars.js"></script>
     <script src="InputTool.js"></script>
+    <script src="jquery.i18n.js"></script>
 </head>
 <body>
     <div class="container main-container">
+        <!-- Language Selector -->
+        <div class="row mb-3">
+            <div class="col-12 text-end">
+                <select id="language_selector" class="form-select" style="width: 200px; display: inline-block;">
+                    <option value="vi">🇻🇳 Tiếng Việt</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+            </div>
+        </div>
+
         <!-- Page Header -->
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="page-title animate-fade-in">
                     <i class="bi bi-mortarboard-fill icon-lg"></i>
-                    Student Management System
+                    <span data-i18n="page_title">Student Management System</span>
                 </h1>
             </div>
         </div>
@@ -33,7 +44,7 @@
                     <div class="card-header gradient-header">
                         <h5 class="mb-0">
                             <i class="bi bi-table icon-lg"></i>
-                            Student List
+                            <span data-i18n="student_list">Student List</span>
                         </h5>
                     </div>
                     <div class="card-body p-0">
@@ -52,7 +63,7 @@
                     <div class="card-header gradient-header">
                         <h5 class="mb-0" id="div_01">
                             <i class="bi bi-person-plus-fill icon-lg"></i>
-                            Add/Edit Student
+                            <span data-i18n="form_title">Add/Edit Student</span>
                         </h5>
                     </div>
                     <div class="card-body">
@@ -61,43 +72,47 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">
-                                        <i class="bi bi-person"></i> Student Name
+                                        <i class="bi bi-person"></i> <span data-i18n="student_name">Student Name</span>
                                     </label>
                                     <input type="text" class="form-control form-control-lg objData" 
-                                           data-name="name" placeholder="Enter student name">
+                                        data-name="name" 
+                                        data-validation="required alphanumeric_utf8" 
+                                        data-length="ge 2"
+                                        data-msg="required:Tên sinh viên là bắt buộc;alphanumeric_utf8:Tên chỉ được chứa chữ cái và số;length:Tên phải có ít nhất 2 ký tự"
+                                        data-i18n-placeholder="enter_student_name">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">
-                                        <i class="bi bi-calendar"></i> Age
+                                        <i class="bi bi-calendar"></i> <span data-i18n="age">Age</span>
                                     </label>
                                     <input type="number" class="form-control form-control-lg objData" 
-                                           data-name="age" placeholder="Enter age" min="1" max="100">
+                                           data-name="age" data-i18n-placeholder="enter_age" min="1" max="100">
                                 </div>
                             </div>
 
                             <!-- Scores Section -->
                             <div class="mb-3">
                                 <label class="form-label fw-bold">
-                                    <i class="bi bi-award"></i> Subject Scores
+                                    <i class="bi bi-award"></i> <span data-i18n="subject_scores">Subject Scores</span>
                                 </label>
                                 <div id="scores_input">
                                     <div class="score_row mb-3">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <select class="form-select objData" data-name="note1_name">
-                                                    <option value="">Select Subject</option>
-                                                    <option value="Toan">Mathematics</option>
-                                                    <option value="Van">Literature</option>
-                                                    <option value="Tieng Anh">English</option>
-                                                    <option value="Ly">Physics</option>
-                                                    <option value="Hoa">Chemistry</option>
-                                                    <option value="Sinh">Biology</option>
+                                                    <option value="" data-i18n="select_subject">Select Subject</option>
+                                                    <option value="Toan" data-i18n="mathematics">Mathematics</option>
+                                                    <option value="Van" data-i18n="literature">Literature</option>
+                                                    <option value="Tieng Anh" data-i18n="english">English</option>
+                                                    <option value="Ly" data-i18n="physics">Physics</option>
+                                                    <option value="Hoa" data-i18n="chemistry">Chemistry</option>
+                                                    <option value="Sinh" data-i18n="biology">Biology</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <input type="number" class="form-control objData" 
-                                                           data-name="note1_val" placeholder="Score (0-10)" 
+                                                           data-name="note1_val" data-i18n-placeholder="score_placeholder" 
                                                            step="0.1" min="0" max="10">
                                                     <span class="input-group-text">/10</span>
                                                 </div>
@@ -107,13 +122,12 @@
                                 </div>
                             </div>
 
-                            <!-- Action Buttons -->
                             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                                 <button class="btn btn-add btn-lg me-md-2" id="add_score">
-                                    <i class="bi bi-plus-circle"></i> Add Subject
+                                    <i class="bi bi-plus-circle"></i> <span data-i18n="add_subject">Add Subject</span>
                                 </button>
                                 <button class="btn btn-custom btn-lg" id="btn_show">
-                                    <i class="bi bi-check-circle"></i> Save Student
+                                    <i class="bi bi-check-circle"></i> <span data-i18n="save_student">Save Student</span>
                                 </button>
                             </div>
                         </div>
@@ -122,21 +136,20 @@
             </div>
         </div>
 
-        <!-- Student Details -->
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <div class="card custom-card details-card" id="student_details">
                     <div class="card-header border-0">
                         <h5 class="mb-0">
                             <i class="bi bi-graph-up icon-lg"></i>
-                            Student Score Details
+                            <span data-i18n="student_details">Student Score Details</span>
                         </h5>
                     </div>
                     <div class="card-body">
                         <div id="details_content">
                             <div class="text-center text-white-50">
                                 <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
-                                <p class="mt-2">Select a student to view detailed scores</p>
+                                <p class="mt-2" data-i18n="select_student_view">Select a student to view detailed scores</p>
                             </div>
                         </div>
                     </div>
@@ -145,7 +158,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="code.js"></script>
 </body>
