@@ -1,0 +1,25 @@
+<table id="bang" class="table table-striped">
+    <tr>
+        <th id="id">ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Scores</th>
+        <th>Actions</th>
+    </tr>
+    {{#each this}}  
+    <tr id="vai">
+        <td id="ids">{{ID}}</td>  
+        <td id="names">{{name}}</td>
+        <td id="ages">{{age}}</td>
+        <td id="notes">
+            {{#mon}}
+            {{tenmon}}: {{diem}}<br>
+            {{/mon}}
+        </td>
+        <td>
+            <button class="edit-btn" data-id="{{ID}}">Edit</button>
+            <button class="delete-btn" data-id="{{ID}}">Delete</button>
+        </td>
+    </tr>
+    {{/each}} 
+</table>

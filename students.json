@@ -1,0 +1,22 @@
+[
+    {
+        "ID": 1,
+        "name": "Nguyễn Văn A",
+        "age": 20,
+        "mon": [
+            { "tenmon": "Toan", "diem": 8.5 },
+            { "tenmon": "Van", "diem": 7 },
+            { "tenmon": "Tieng Anh", "diem": 9 }
+        ]
+    },
+    {
+        "ID": 2,
+        "name": "Trần Thị B",
+        "age": 22,
+        "mon": [
+            { "tenmon": "Toan", "diem": 6 },
+            { "tenmon": "Van", "diem": 8 },
+            { "tenmon": "Tieng Anh", "diem": 7.5 }
+        ]
+    }
+]
