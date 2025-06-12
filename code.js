@@ -68,7 +68,6 @@ function switchLanguage(lang) {
         console.error("Failed to load language:", lang);
     });
 }
-
 // Load dữ liệu ban đầu
 function loadInitialData() {
     $.getJSON('students.json', function(jsonData) {
@@ -83,6 +82,10 @@ function loadInitialData() {
             age: item.age || 20,
             mon: Array.isArray(item.mon) ? item.mon : []
         }));
+        $.get("./add_edit_form.html", function(data) {
+            $("#add_edit_form_container").html(data);
+
+        });
         loadTmplAndShow("./tmpl02.html", data02, "#div_02");
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.error("Failed to load students.json:", textStatus, errorThrown);
@@ -122,7 +125,6 @@ function setupValidation() {
   // Thêm validation event cho form
   do_gl_add_validation_event({
     dataZone: $("#khoi"),
-    event: "blur",
     showError: true,
   })
 }
