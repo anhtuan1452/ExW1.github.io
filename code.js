@@ -1,4 +1,3 @@
-
 const DATA02 = [];
 let SCORE_COUNT = 1; // Biến đếm số lượng điểm
 let EDITING_ID = null; // Biến lưu ID đang chỉnh sửa
@@ -20,12 +19,10 @@ function do_lc_translateText(key, defaultText = '') {
 }
 
 function do_lc_updatePageTranslations() {
-    // Dịch các element có data-i18n
     $('[data-i18n]').each(function () {
         const key = $(this).data('i18n');
         $(this).text(do_lc_translateText(key));
     });
-    // Dịch placeholder
     $('[data-i18n-placeholder]').each(function () {
         const key = $(this).data('i18n-placeholder');
         $(this).attr('placeholder', do_lc_translateText(key));
@@ -36,7 +33,6 @@ Handlebars.registerHelper('transl', function (key) {
     return new Handlebars.SafeString(do_lc_translateText(key));
 });
 
-// Hàm load template và hiển thị (local - thực thi tải và hiển thị)
 function do_lc_loadTmplAndShow(tmplPath, data, divToShow) {
     $.get(tmplPath, function (html) {
         const tmpl = Handlebars.compile(html);
@@ -48,7 +44,6 @@ function do_lc_loadTmplAndShow(tmplPath, data, divToShow) {
     });
 }
 
-// Hàm chuyển đổi ngôn ngữ (local - thực thi chuyển đổi)
 function do_lc_switchLanguage(lang) {
     can_lc_initI18n(lang).then(() => {
         do_lc_updatePageTranslations();
@@ -105,14 +100,6 @@ function do_lc_createScoreRow(count, selectedSubject = '', score = '') {
                 </div>
             </div>
         </div>`;
-}
-
-function do_lc_setupValidation() {
-    // Thêm validation event cho form
-    do_gl_add_validation_event({
-        dataZone: $("#div_USERstudent_form_main"),
-        showError: true,
-    });
 }
 
 function can_lc_bindEvents() {
