@@ -1,8 +1,8 @@
-// Khai báo biến global (nếu cần dùng trong thư viện, nhưng ưu tiên local)
-const DATA02 = []; // Hằng số lưu trữ dữ liệu
+
+const DATA02 = [];
 let SCORE_COUNT = 1; // Biến đếm số lượng điểm
 let EDITING_ID = null; // Biến lưu ID đang chỉnh sửa
-let CURRENT_LANG = 'vi'; // Biến lưu ngôn ngữ hiện tại
+let CURRENT_LANG = 'vi';
 
 function can_lc_initI18n(lang = 'vi') {
     return new Promise((resolve, reject) => {
