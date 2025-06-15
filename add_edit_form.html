@@ -1,7 +1,6 @@
-<!-- add_edit_form.html -->
-<div class="card custom-card" id="khoi">
+<div class="card custom-card" id="div_USERstudent_form_main">
     <div class="card-header gradient-header">
-        <h5 class="mb-0" id="div_01">
+        <h5 class="mb-0" id="div_USERstudent_form_title">
             <i class="bi bi-person-plus-fill icon-lg"></i>
             <span data-i18n="form_title">Add/Edit Student</span>
         </h5>
@@ -11,33 +10,34 @@
             <!-- Student Basic Info -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">
+                    <label class="form-label fw-bold" id="lab_USERstudent_form_name">
                         <i class="bi bi-person"></i> <span data-i18n="student_name">Student Name</span>
                     </label>
                     <input type="text" class="form-control form-control-lg objData" 
+                           id="inp_USERstudent_form_name" 
                            data-name="name" 
                            data-msg="required:Tên sinh viên là bắt buộc;alphanumeric_utf8:Tên chỉ được chứa chữ cái và số;length:Tên phải có ít nhất 2 ký tự"
                            data-i18n-placeholder="enter_student_name">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">
+                    <label class="form-label fw-bold" id="lab_USERstudent_form_age">
                         <i class="bi bi-calendar"></i> <span data-i18n="age">Age</span>
                     </label>
                     <input type="number" class="form-control form-control-lg objData" 
-                           data-name="age" data-i18n-placeholder="enter_age" min="1" max="100">
+                           id="inp_USERstudent_form_age" data-name="age" data-i18n-placeholder="enter_age" min="1" max="100">
                 </div>
             </div>
 
             <!-- Scores Section -->
             <div class="mb-3">
-                <label class="form-label fw-bold">
+                <label class="form-label fw-bold" id="lab_USERstudent_form_scores">
                     <i class="bi bi-award"></i> <span data-i18n="subject_scores">Subject Scores</span>
                 </label>
-                <div id="scores_input">
+                <div id="div_USERstudent_form_scores_input">
                     <div class="score_row mb-3">
                         <div class="row">
                             <div class="col-md-6">
-                                <select class="form-select objData" data-name="note1_name">
+                                <select class="form-select objData" id="sel_USERstudent_form_note1_name" data-name="note1_name">
                                     <option value="" data-i18n="select_subject">Select Subject</option>
                                     <option value="Toan" data-i18n="mathematics">Mathematics</option>
                                     <option value="Van" data-i18n="literature">Literature</option>
@@ -50,7 +50,7 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control objData" 
-                                           data-name="note1_val" data-i18n-placeholder="score_placeholder" 
+                                           id="inp_USERstudent_form_note1_val" data-name="note1_val" data-i18n-placeholder="score_placeholder" 
                                            step="0.1" min="0" max="10">
                                     <span class="input-group-text">/10</span>
                                 </div>
@@ -61,10 +61,10 @@
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <button class="btn btn-add btn-lg me-md-2" id="add_score">
+                <button class="btn btn-add btn-lg me-md-2" id="btn_USERstudent_form_score_add">
                     <i class="bi bi-plus-circle"></i> <span data-i18n="add_subject">Add Subject</span>
                 </button>
-                <button class="btn btn-custom btn-lg" id="btn_show">
+                <button class="btn btn-custom btn-lg" id="btn_USERstudent_form_save">
                     <i class="bi bi-check-circle"></i> <span data-i18n="save_student">Save Student</span>
                 </button>
             </div>

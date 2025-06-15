@@ -1,118 +1,104 @@
-let data02 = [];
-let scoreCount = 1;
-let editingId = null;
-let currentLang = 'vi';
+// Khai báo biến global (nếu cần dùng trong thư viện, nhưng ưu tiên local)
+const DATA02 = []; // Hằng số lưu trữ dữ liệu
+let SCORE_COUNT = 1; // Biến đếm số lượng điểm
+let EDITING_ID = null; // Biến lưu ID đang chỉnh sửa
+let CURRENT_LANG = 'vi'; // Biến lưu ngôn ngữ hiện tại
 
-// Khởi tạo i18n
-function initI18n(lang = 'vi') {
+function can_lc_initI18n(lang = 'vi') {
     return new Promise((resolve, reject) => {
-        $.i18n({ locale: lang}).load(`./transl/${lang}.json`, lang).done(function() {
-            currentLang = lang;
+        $.i18n({ locale: lang }).load(`./transl/${lang}.json`, lang).done(function () {
+            CURRENT_LANG = lang;
             resolve();
-        }).fail(function() {
+        }).fail(function () {
             reject();
         });
     });
 }
 
-// Hàm dịch text
-function translateText(key, defaultText = '') {
+function do_lc_translateText(key, defaultText = '') {
     return $.i18n(key) || defaultText;
 }
 
-// Cập nhật tất cả text trên trang
-function updatePageTranslations() {
+function do_lc_updatePageTranslations() {
     // Dịch các element có data-i18n
-    $('[data-i18n]').each(function() {
+    $('[data-i18n]').each(function () {
         const key = $(this).data('i18n');
-        $(this).text(translateText(key));
+        $(this).text(do_lc_translateText(key));
     });
-    
     // Dịch placeholder
-    $('[data-i18n-placeholder]').each(function() {
+    $('[data-i18n-placeholder]').each(function () {
         const key = $(this).data('i18n-placeholder');
-        $(this).attr('placeholder', translateText(key));
+        $(this).attr('placeholder', do_lc_translateText(key));
     });
 }
 
-// Handlebars helper cho dịch
-Handlebars.registerHelper('transl', function(key) {
-    return new Handlebars.SafeString(translateText(key));
+Handlebars.registerHelper('transl', function (key) {
+    return new Handlebars.SafeString(do_lc_translateText(key));
 });
 
-Handlebars.registerHelper('select', function(value, options) {
-    var $el = $('<select />').html(options.fn(this));
-    $el.find('[value="' + value + '"]').attr({'selected': 'selected'});
-    return $el.html();
-});
-
-// Load template và hiển thị
-var loadTmplAndShow = function(tmplPath, data, divToShow) {
-    $.get(tmplPath, function(html) {
-        var tmpl = Handlebars.compile(html);
+// Hàm load template và hiển thị (local - thực thi tải và hiển thị)
+function do_lc_loadTmplAndShow(tmplPath, data, divToShow) {
+    $.get(tmplPath, function (html) {
+        const tmpl = Handlebars.compile(html);
         $(divToShow).html(tmpl(data));
-        updatePageTranslations(); // Cập nhật dịch sau khi render
-        bindEvents();
-    }).fail(function() {
+        do_lc_updatePageTranslations(); 
+        can_lc_bindEvents();
+    }).fail(function () {
         console.error("Failed to load template:", tmplPath);
     });
-};
+}
 
-// Chuyển đổi ngôn ngữ
-function switchLanguage(lang) {
-    initI18n(lang).then(() => {
-        updatePageTranslations();
-        loadTmplAndShow("./tmpl02.html", data02, "#div_02");
-        $("#language_selector").val(lang);
+// Hàm chuyển đổi ngôn ngữ (local - thực thi chuyển đổi)
+function do_lc_switchLanguage(lang) {
+    can_lc_initI18n(lang).then(() => {
+        do_lc_updatePageTranslations();
+        do_lc_loadTmplAndShow("./tmpl02.html", DATA02, "#div_USERstudent_list_main");
+        $("#sel_USERstudent_lang_switch").val(lang);
     }).catch(() => {
         console.error("Failed to load language:", lang);
     });
 }
-// Load dữ liệu ban đầu
-function loadInitialData() {
-    $.getJSON('students.json', function(jsonData) {
+
+function do_lc_loadInitialData() {
+    $.getJSON('students.json', function (jsonData) {
         if (!Array.isArray(jsonData)) {
             console.error("students.json is not an array");
-            loadTmplAndShow("./tmpl02.html", data02, "#div_02");
+            do_lc_loadTmplAndShow("./tmpl02.html", DATA02, "#div_USERstudent_list_main");
             return;
         }
-        data02 = jsonData.map(item => ({
-            ID: item.ID || Math.max(...data02.map(s => s.ID), 0) + 1,
+        DATA02.length = 0;
+        DATA02.push(...jsonData.map(item => ({
+            ID: item.ID || Math.max(...DATA02.map(s => s.ID), 0) + 1,
             name: item.name || "Unknown",
             age: item.age || 20,
             mon: Array.isArray(item.mon) ? item.mon : []
-        }));
-        $.get("./add_edit_form.html", function(data) {
-            $("#add_edit_form_container").html(data);
-
-        });
-        loadTmplAndShow("./tmpl02.html", data02, "#div_02");
-    }).fail(function(jqXHR, textStatus, errorThrown) {
+        })));
+        do_lc_loadTmplAndShow("./tmpl02.html", DATA02, "#div_USERstudent_list_main");
+    }).fail(function (jqXHR, textStatus, errorThrown) {
         console.error("Failed to load students.json:", textStatus, errorThrown);
-        loadTmplAndShow("./tmpl02.html", data02, "#div_02");
+        do_lc_loadTmplAndShow("./tmpl02.html", DATA02, "#div_USERstudent_list_main");
     });
 }
 
-// Tạo score row mới
-function createScoreRow(count, selectedSubject = '', score = '') {
+function do_lc_createScoreRow(count, selectedSubject = '', score = '') {
     return `
         <div class="score_row mb-3">
             <div class="row">
                 <div class="col-md-6">
                     <select class="form-select objData" data-name="note${count}_name">
-                        <option value="">${translateText('select_subject')}</option>
-                        <option value="Toan" ${selectedSubject === 'Toan' ? 'selected' : ''}>${translateText('mathematics')}</option>
-                        <option value="Van" ${selectedSubject === 'Van' ? 'selected' : ''}>${translateText('literature')}</option>
-                        <option value="Tieng Anh" ${selectedSubject === 'Tieng Anh' ? 'selected' : ''}>${translateText('english')}</option>
-                        <option value="Ly" ${selectedSubject === 'Ly' ? 'selected' : ''}>${translateText('physics')}</option>
-                        <option value="Hoa" ${selectedSubject === 'Hoa' ? 'selected' : ''}>${translateText('chemistry')}</option>
-                        <option value="Sinh" ${selectedSubject === 'Sinh' ? 'selected' : ''}>${translateText('biology')}</option>
+                        <option value="">${do_lc_translateText('select_subject')}</option>
+                        <option value="Toan" ${selectedSubject === 'Toan' ? 'selected' : ''}>${do_lc_translateText('mathematics')}</option>
+                        <option value="Van" ${selectedSubject === 'Van' ? 'selected' : ''}>${do_lc_translateText('literature')}</option>
+                        <option value="Tieng Anh" ${selectedSubject === 'Tieng Anh' ? 'selected' : ''}>${do_lc_translateText('english')}</option>
+                        <option value="Ly" ${selectedSubject === 'Ly' ? 'selected' : ''}>${do_lc_translateText('physics')}</option>
+                        <option value="Hoa" ${selectedSubject === 'Hoa' ? 'selected' : ''}>${do_lc_translateText('chemistry')}</option>
+                        <option value="Sinh" ${selectedSubject === 'Sinh' ? 'selected' : ''}>${do_lc_translateText('biology')}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group">
                         <input type="number" class="form-control objData" 
-                               data-name="note${count}_val" placeholder="${translateText('score')} (0-10)" 
+                               data-name="note${count}_val" placeholder="${do_lc_translateText('score')} (0-10)" 
                                step="0.1" min="0" max="10" value="${score}">
                         <span class="input-group-text">/10</span>
                     </div>
@@ -120,36 +106,37 @@ function createScoreRow(count, selectedSubject = '', score = '') {
             </div>
         </div>`;
 }
-// Thêm validation cho InputTool
-function setupValidation() {
-  // Thêm validation event cho form
-  do_gl_add_validation_event({
-    dataZone: $("#khoi"),
-    showError: true,
-  })
+
+function do_lc_setupValidation() {
+    // Thêm validation event cho form
+    do_gl_add_validation_event({
+        dataZone: $("#div_USERstudent_form_main"),
+        showError: true,
+    });
 }
-// Gắn sự kiện
-function bindEvents() {
+
+function can_lc_bindEvents() {
     // Thêm môn học
-    $("#add_score").off("click").on("click", function() {
-        scoreCount++;
-        $("#scores_input").append(createScoreRow(scoreCount));
+    $("#btn_USERstudent_form_score_add").off("click").on("click", function () {
+        SCORE_COUNT++;
+        $("#div_USERstudent_form_scores_input").append(do_lc_createScoreRow(SCORE_COUNT));
     });
 
-    // Lưu sinh viên
-    $("#btn_show").off("click").on("click", function() {
-        var data = req_gl_data({ 
-            dataZoneDom: $("#khoi"),
-            showError: true});
+    
+    $("#btn_USERstudent_form_save").off("click").on("click", function () {
+        const data = req_gl_data({
+            dataZoneDom: $("#div_USERstudent_form_main"),
+            showError: true
+        });
         if (!data.hasError) {
-            var student = {
-                ID: editingId || (Math.max(...data02.map(s => s.ID), 0) + 1),
+            const student = {
+                ID: EDITING_ID || (Math.max(...DATA02.map(s => s.ID), 0) + 1),
                 name: data.data.name,
                 age: parseInt(data.data.age),
                 mon: []
             };
-            
-            for (let i = 1; i <= scoreCount; i++) {
+            console.error("data.data", data.data);
+            for (let i = 1; i <= SCORE_COUNT; i++) {
                 if (data.data[`note${i}_name`] && data.data[`note${i}_val`]) {
                     student.mon.push({
                         tenmon: data.data[`note${i}_name`],
@@ -157,80 +144,76 @@ function bindEvents() {
                     });
                 }
             }
-            
-            var index = data02.findIndex(s => s.ID === student.ID);
+
+            const index = DATA02.findIndex(s => s.ID === student.ID);
             if (index !== -1) {
-                data02[index] = student;
+                DATA02[index] = student;
             } else {
-                data02.push(student);
+                DATA02.push(student);
             }
-            
-            loadTmplAndShow("./tmpl02.html", data02, "#div_02");
-            resetForm();
-            editingId = null;
+            do_lc_loadTmplAndShow("./tmpl02.html", DATA02, "#div_USERstudent_list_main");
+            do_lc_resetForm();
+            EDITING_ID = null;
         }
     });
 
-    // Hiển thị chi tiết
-    $("#bang tr:gt(0)").off("click").on("click", function() {
-        var studentId = parseInt($(this).find("#ids").text());
-        var student = data02.find(s => s.ID === studentId);
+    // Student list click event
+    $("#tab_USERstudent_list_table tr:gt(0)").off("click").on("click", function () {
+        const studentId = parseInt($(this).find("#td_USERstudent_list_id").text());
+        const student = DATA02.find(s => s.ID === studentId);
         if (student) {
-            var detailsHtml = `<h3>${student.name}</h3><ul>`;
+            let detailsHtml = `<h3>${student.name}</h3><ul>`;
             student.mon.forEach(score => {
                 detailsHtml += `<li>${score.tenmon}: ${score.diem}</li>`;
             });
             detailsHtml += `</ul>`;
-            $("#details_content").html(detailsHtml);
+            $("#div_USERstudent_details_content").html(detailsHtml);
         }
     });
 
-    // Xóa sinh viên
-    $(".delete-btn").off("click").on("click", function(e) {
+    // Student Delete click event
+    $(".delete-btn").off("click").on("click", function (e) {
         e.stopPropagation();
-        var studentId = parseInt($(this).data("id"));
-        data02 = data02.filter(s => s.ID !== studentId);
-        loadTmplAndShow("./tmpl02.html", data02, "#div_02");
-        $("#details_content").html("");
+        const studentId = parseInt($(this).data("id"));
+        DATA02 = DATA02.filter(s => s.ID !== studentId);
+        do_lc_loadTmplAndShow("./tmpl02.html", DATA02, "#div_USERstudent_list_main");
+        $("#div_USERstudent_details_content").html("");
     });
 
-    // Sửa sinh viên
-    $(".edit-btn").off("click").on("click", function(e) {
+    // Student Edit click event
+    $(".edit-btn").off("click").on("click", function (e) {
         e.stopPropagation();
-        var studentId = parseInt($(this).data("id"));
-        var student = data02.find(s => s.ID === studentId);
+        const studentId = parseInt($(this).data("id"));
+        const student = DATA02.find(s => s.ID === studentId);
         if (student) {
-            editingId = studentId;
-            $("#khoi input[data-name='name']").val(student.name);
-            $("#khoi input[data-name='age']").val(student.age);
-            $("#scores_input").html("");
-            scoreCount = 0;
-            
+            EDITING_ID = studentId;
+            $("#div_USERstudent_form_main input[data-name='name']").val(student.name);
+            $("#div_USERstudent_form_main input[data-name='age']").val(student.age);
+            $("#div_USERstudent_form_scores_input").html("");
+            SCORE_COUNT = 0;
+
             student.mon.forEach((score, index) => {
-                scoreCount++;
-                $("#scores_input").append(createScoreRow(scoreCount, score.tenmon, score.diem));
+                SCORE_COUNT++;
+                $("#div_USERstudent_form_scores_input").append(do_lc_createScoreRow(SCORE_COUNT, score.tenmon, score.diem));
             });
         }
     });
 
-    // Chuyển đổi ngôn ngữ
-    $("#language_selector").off("change").on("change", function() {
+    $("#sel_USERstudent_lang_switch").off("change").on("change", function () {
         const lang = $(this).val();
-        switchLanguage(lang);
+        do_lc_switchLanguage(lang);
     });
 }
 
-// Reset form
-function resetForm() {
-    $("#khoi input").val("");
-    $("#scores_input").html(createScoreRow(1));
-    scoreCount = 1;
+function do_lc_resetForm() {
+    $("#div_USERstudent_form_main input").val("");
+    $("#div_USERstudent_form_scores_input").html(do_lc_createScoreRow(1));
+    SCORE_COUNT = 1;
 }
 
-// Khởi tạo ứng dụng
-$(document).ready(function() {
-    initI18n('vi').then(() => {
-        updatePageTranslations();
-        loadInitialData();
+$(document).ready(function () {
+    can_lc_initI18n('vi').then(() => {
+        do_lc_loadInitialData();
+        do_lc_updatePageTranslations();
     });
 });

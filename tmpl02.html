@@ -1,17 +1,17 @@
-<table id="bang" class="table table-striped">
+<table id="tab_USERstudent_list_table" class="table table-striped">
     <tr>
-        <th id="id">{{transl "Id"}}</th>
-        <th>{{transl 'Name'}}</th>
-        <th>{{transl 'Age'}}</th>
-        <th>{{transl 'Scores'}}</th>
-        <th>{{transl 'Action'}}</th>
+        <th id="th_USERstudent_list_id">{{transl "Id"}}</th>
+        <th id="th_USERstudent_list_name">{{transl 'Name'}}</th>
+        <th id="th_USERstudent_list_age">{{transl 'Age'}}</th>
+        <th id="th_USERstudent_list_scores">{{transl 'Scores'}}</th>
+        <th id="th_USERstudent_list_action">{{transl 'Action'}}</th>
     </tr>
     {{#each this}}  
-    <tr id="vai">
-        <td id="ids">{{ID}}</td>  
-        <td id="names">{{name}}</td>
-        <td id="ages">{{age}}</td>
-        <td id="notes">
+    <tr id="tr_USERstudent_list_row">
+        <td id="td_USERstudent_list_id">{{ID}}</td>  
+        <td id="td_USERstudent_list_name">{{name}}</td>
+        <td id="td_USERstudent_list_age">{{age}}</td>
+        <td id="td_USERstudent_list_notes">
             {{#mon}}
             {{tenmon}}: {{diem}}<br>
             {{/mon}}
