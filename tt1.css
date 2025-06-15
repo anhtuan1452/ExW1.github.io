@@ -1,109 +1,291 @@
 :root {
-            --primary-color: #283D5A;
-            --secondary-color: #667eea;
-            --accent-color: #764ba2;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-        }
-        
-        .main-container {
-            padding: 2rem 0;
-        }
-        
-        .page-title {
-            color: var(--primary-color);
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .custom-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .custom-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-        
-        .gradient-header {
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-        }
-        
-        .btn-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 25px;
-            padding: 10px 25px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-custom:hover {
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .btn-add {
-            background: linear-gradient(135deg, #28a745, #20c997);
-        }
-        
-        .btn-add:hover {
-            background: linear-gradient(135deg, #20c997, #17a2b8);
-        }
-        
-        .form-control:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        }
-        
-        .select-custom {
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-        
-        .input-group-custom {
-            margin-bottom: 1rem;
-        }
-        
-        .score-badge {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 20px;
-            padding: 8px 15px;
-            margin: 5px;
-            display: inline-block;
-            font-weight: 500;
-        }
-        
-        .details-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .icon-lg {
-            font-size: 1.2rem;
-            margin-right: 8px;
-        }
+  --primary-color: #283d5a;
+  --secondary-color: #667eea;
+  --accent-color: #764ba2;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.header-section {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.language-selector {
+  max-width: 200px;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.language-selector option {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Original styles from tt1.css */
+.main-container {
+  padding: 2rem 0;
+}
+
+.page-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.custom-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.gradient-header {
+  background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+  color: white;
+  border-radius: 15px 15px 0 0 !important;
+}
+
+.btn-custom {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.btn-custom:hover {
+  background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.btn-add {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.btn-add:hover {
+  background: linear-gradient(135deg, #20c997, #17a2b8);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.form-control:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.select-custom {
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.input-group-custom {
+  margin-bottom: 1rem;
+}
+
+.score-badge {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-radius: 20px;
+  padding: 8px 15px;
+  margin: 5px;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.details-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.icon-lg {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+/* Additional styles for better layout */
+.khoilon {
+  width: 100%;
+}
+
+.score_row {
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.student-detail {
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1199.98px) {
+  .main-container {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-title i {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .header-section .row {
+    text-align: center;
+  }
+
+  .language-selector {
+    margin: 1rem auto 0;
+    max-width: 250px;
+  }
+
+  .sticky-top {
+    position: static !important;
+  }
+
+  .main-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .main-container {
+    padding: 0.5rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .btn-custom,
+  .btn-add {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+
+  .score_row {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .row.mb-3 .col-md-6 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .page-title {
+    font-size: 1.2rem;
+  }
+
+  .card-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .card-header h5 {
+    font-size: 1rem;
+  }
+
+  .btn-custom,
+  .btn-add {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .d-md-flex {
+    flex-direction: column;
+  }
+
+  .me-md-2 {
+    margin-right: 0 !important;
+  }
+}
+
+/* Table improvements */
+.table th {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
