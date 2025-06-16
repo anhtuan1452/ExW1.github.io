@@ -1,4 +1,4 @@
-const DATA02 = [];
+let DATA02 = [];
 let SCORE_COUNT = 1; // Biến đếm số lượng điểm
 let EDITING_ID = null; // Biến lưu ID đang chỉnh sửa
 let CURRENT_LANG = 'vi';
